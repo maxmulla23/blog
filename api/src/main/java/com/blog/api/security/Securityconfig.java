@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,18 +24,23 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class Securityconfig {
 
-
+    private JwtAuthEntryPoint authEntryPoint;
     private CustomUserDetailService userDetailService;
 
     @Autowired
-    public Securityconfig(CustomUserDetailService userDetailService) {
+    public Securityconfig(CustomUserDetailService userDetailService, JwtAuthEntryPoint authEntryPoint) {
         this.userDetailService = userDetailService;
+        this.authEntryPoint = authEntryPoint;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(authEntryPoint))
+                .sessionManagement(sessionManagement -> sessionManagement
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated())
