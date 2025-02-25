@@ -29,4 +29,9 @@ public class GenreController {
     public ResponseEntity<List<GenreDto>> getGenre() {
         return new ResponseEntity<>(genreService.getAllGenres(), HttpStatus.OK);
     }
+    @GetMapping("genre/{id}")
+    public ResponseEntity<GenreDto> genre(@PathVariable int genreId) {
+        GenreDto genreDto = genreService.getGenreById(genreId);
+        return new ResponseEntity<>(genreDto, HttpStatus.OK);
+    }
 }

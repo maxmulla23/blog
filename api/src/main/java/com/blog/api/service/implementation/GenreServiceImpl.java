@@ -1,6 +1,7 @@
 package com.blog.api.service.implementation;
 
 import com.blog.api.dto.GenreDto;
+import com.blog.api.exceptions.GenreNotFoundException;
 import com.blog.api.models.Genre;
 import com.blog.api.repository.GenreRepository;
 import com.blog.api.service.GenreService;
@@ -32,6 +33,23 @@ public class GenreServiceImpl implements GenreService {
     public List<GenreDto> getAllGenres() {
         List<Genre> genre = genreRepository.findAll();
         return genre.stream().map(g -> mapToDto(g)).collect(Collectors.toList());
+    }
+
+    @Override
+    public GenreDto getGenreById(int genreId) {
+        Genre genre = genreRepository.findById(genreId).orElseThrow(() -> new GenreNotFoundException("Genre not found"));
+
+        return mapToDto(genre);
+    }
+
+    @Override
+    public GenreDto updateGenre(int genreId, GenreDto genreDto) {
+        return null;
+    }
+
+    @Override
+    public void DeleteGenre(int GenreId) {
+
     }
 
     private GenreDto mapToDto(Genre genre) {
