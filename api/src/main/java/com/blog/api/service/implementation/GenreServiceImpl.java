@@ -7,6 +7,9 @@ import com.blog.api.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class GenreServiceImpl implements GenreService {
     private GenreRepository genreRepository;
@@ -23,6 +26,12 @@ public class GenreServiceImpl implements GenreService {
         Genre newGenre = genreRepository.save(genre);
 
         return mapToDto(newGenre);
+    }
+
+    @Override
+    public List<GenreDto> getAllGenres() {
+        List<Genre> genre = genreRepository.findAll();
+        return genre.stream().map(g -> mapToDto(g)).collect(Collectors.toList());
     }
 
     private GenreDto mapToDto(Genre genre) {

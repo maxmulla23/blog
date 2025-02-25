@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/")
 public class GenreController {
@@ -17,9 +19,14 @@ public class GenreController {
         this.genreService = genreService;
     }
 
-    @PostMapping("/genre/create")
+    @PostMapping("genre/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<GenreDto> createGenre(@RequestBody GenreDto genreDto) {
         return new ResponseEntity<>(genreService.creategenre(genreDto), HttpStatus.CREATED);
+    }
+
+    @GetMapping("genre")
+    public ResponseEntity<List<GenreDto>> getGenre() {
+        return new ResponseEntity<>(genreService.getAllGenres(), HttpStatus.OK);
     }
 }

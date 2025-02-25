@@ -28,8 +28,8 @@ public class Blog {
     @Lob
     private byte[] image;
 
-    @ManyToOne
-    @JoinColumn(name = "genre_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genre_id")
     private Genre genre;
 
     @CreationTimestamp
