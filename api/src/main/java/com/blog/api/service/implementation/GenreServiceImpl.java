@@ -44,12 +44,20 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public GenreDto updateGenre(int genreId, GenreDto genreDto) {
-        return null;
+        Genre genre = genreRepository.findById(genreId).orElseThrow(() -> new GenreNotFoundException("Genre not found!"));
+
+        genre.setName(genreDto.getName());
+
+        Genre updateGenre = genreRepository.save(genre);
+
+        return mapToDto(updateGenre);
     }
 
     @Override
-    public void DeleteGenre(int GenreId) {
+    public void DeleteGenre(int genreId) {
+        Genre genre = genreRepository.findById(genreId).orElseThrow(() -> new GenreNotFoundException("Genre not found!"));
 
+        genreRepository.delete(genre);
     }
 
     private GenreDto mapToDto(Genre genre) {

@@ -9,5 +9,5 @@ public interface GenreService {
     List<GenreDto> getAllGenres();
     GenreDto getGenreById(int genreId);
     GenreDto updateGenre(int genreId, GenreDto genreDto);
-    void DeleteGenre(int GenreId);
+    void DeleteGenre(int genreId);
 }
