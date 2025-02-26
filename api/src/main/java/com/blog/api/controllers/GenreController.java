@@ -34,4 +34,16 @@ public class GenreController {
         GenreDto genreDto = genreService.getGenreById(genreId);
         return new ResponseEntity<>(genreDto, HttpStatus.OK);
     }
+
+    @PutMapping("genre/{id}")
+    public ResponseEntity<GenreDto> updateGenre(@PathVariable int genreId, @RequestBody GenreDto genreDto) {
+        GenreDto updatedGenre = genreService.updateGenre(genreId, genreDto);
+
+        return new ResponseEntity<>(updatedGenre, HttpStatus.OK);
+    }
+    @DeleteMapping("genre/{id}")
+    public ResponseEntity<String> delete(@PathVariable int genreId) {
+        genreService.DeleteGenre(genreId);
+        return new ResponseEntity<>("Genre deleted successfully", HttpStatus.OK);
+    }
 }
