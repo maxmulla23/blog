@@ -24,7 +24,9 @@ public class Blog {
     private int id;
     private String title;
     private String content;
-//    private String type;
+
+    private String imageName;
+    private String type;
     @Lob
     private byte[] image;
 
