@@ -29,21 +29,21 @@ export default function Home() {
                     </button>
                     
                     
-                    <button type="button" className="px-4 py-2 text-gray-800 uppercase bg-transparent border-2 border-gray-800 hover:bg-gray-800 hover:text-white text-md">
+                    <button type="button" className="px-4 py-2 text-gray-800 uppercase bg-transparent border-2 rounded-lg border-gray-800 hover:bg-gray-800 hover:text-white text-md">
                         Login
                     </button>
                     
                 </div>
             </div>
             <div className="flex justify-center items-center relative w-full mx-auto mt-6 md:mt-0">
-                      {/* <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
+                      <Image
+          
+          src="/blog.png"
+          alt="app logo"
+          width={400}
+          height={100}
           priority
-        /> */}
+        />
                 {/* <img src={home} alt="journal pic" className='w-96 h-96' /> */}
             </div>
         </div>
