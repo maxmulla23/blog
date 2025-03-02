@@ -1,6 +1,10 @@
+'use client'
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+
 
 export default function Home() {
+  const router = useRouter()
   return (
     
        <main className="relative h-screen overflow-auto bg-white dark:bg-gray-100">
@@ -25,26 +29,24 @@ export default function Home() {
                 </h2>
                 <div className="flex items-center justify-center mt-4">
                     <button type="button" className="px-4 py-2 mr-4 text-white uppercase bg-cyan-900 rounded-lg border-2 border-transparent text-md hover:bg-gray-900">
-                        Get started
+                        register now
                     </button>
                     
                     
-                    <button type="button" className="px-4 py-2 text-gray-800 uppercase bg-transparent border-2 rounded-lg border-gray-800 hover:bg-gray-800 hover:text-white text-md">
+                    <button type="button" onClick={() => router.push('/login')} className="px-4 py-2 text-gray-800 uppercase bg-gray-200 border-2 rounded-lg border-gray-800 hover:bg-gray-800 hover:text-white text-md">
                         Login
                     </button>
                     
                 </div>
             </div>
             <div className="flex justify-center items-center relative w-full mx-auto mt-6 md:mt-0">
-                      <Image
-          
-          src="/blog.png"
-          alt="app logo"
-          width={400}
-          height={100}
-          priority
-        />
-                {/* <img src={home} alt="journal pic" className='w-96 h-96' /> */}
+                        <Image
+                          src="/blog.png"
+                          alt="app logo"
+                          width={400}
+                          height={100}
+                          priority
+                        />
             </div>
         </div>
     </div>
