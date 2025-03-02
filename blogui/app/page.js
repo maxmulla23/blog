@@ -28,7 +28,7 @@ export default function Home() {
                   magni laudantium delectus quasi illum repellat neque laboriosam,
                 </h2>
                 <div className="flex items-center justify-center mt-4">
-                    <button type="button" className="px-4 py-2 mr-4 text-white uppercase bg-cyan-900 rounded-lg border-2 border-transparent text-md hover:bg-gray-900">
+                    <button type="button" onClick={() => router.push('/signup')} className="px-4 py-2 mr-4 text-white uppercase bg-cyan-900 rounded-lg border-2 border-transparent text-md hover:bg-gray-900">
                         register now
                     </button>
                     
