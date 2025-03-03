@@ -87,7 +87,7 @@ export default function Page() {
                   </p>
                 </form>
                 <p className="text-center mt-2 text-gray-500 text-xs">
-                    &copy;2024 Max Mulla. All rights reserved.
+                    &copy;2025 Max Mulla. All rights reserved.
                 </p>
           </div>
           </div>
