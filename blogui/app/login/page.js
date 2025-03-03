@@ -1,11 +1,40 @@
 "use client"
 import Image from "next/image"
 import { UserCircleIcon } from '@heroicons/react/24/solid'
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { signIn, useSession } from "next-auth/react"
+import { toast } from "react-toastify"
+import { useRouter } from "next/router"
 
 export default function Page() {
+    const router = useRouter()
+    const session = useSession()
+    const [username, setUsername] = useState()
+    const [password, setPassword] = useState()
     const [passwordShown, setPasswordShown] = useState(false)
     const togglePasswordVisibility = () => setPasswordShown((cur) => !cur)
+
+    useEffect(() => {
+      if(session?.status === "authenticated") {
+        router.push("/newsfeed")
+      }
+    }, [session?.status])
+
+    const handleLogin = async (e) => {
+      e.preventDefault();
+      let data = { username, password };
+      signIn("credentials", { ...data, redirect: false }).then((callback) => {
+        if (callback?.error) {
+          toast.error(callback.error)
+        }
+
+        if (callback?.ok && !callback?.error) {
+          toast.success("Login successful!")
+        }
+
+      })
+    }
+
     return(
         <div className="min-h-screen flex ">
         <div className="w-1/2 relative">
@@ -35,6 +64,8 @@ export default function Page() {
               id="username"
               type="text"
               name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               placeholder="jsmith"
               className="w-full p-3 border border-gray-300 rounded-lg focus:border-cyan-500"
             />
@@ -45,6 +76,8 @@ export default function Page() {
             </label>
             <input
               id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               type={passwordShown ? "text" : "password"}
               placeholder="********"
               className="w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500"
@@ -57,7 +90,7 @@ export default function Page() {
               {passwordShown ? "🙈" : "👁️"}
             </button>
           </div>
-          <button className="bg-cyan-900 hover:bg-gray-800 text-white w-full py-3 rounded-lg mt-6">
+          <button onClick={handleLogin} className="bg-cyan-900 hover:bg-gray-800 text-white w-full py-3 rounded-lg mt-6">
             Sign In
           </button>
           <div className="flex justify-end mt-4">
