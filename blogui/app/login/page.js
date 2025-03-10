@@ -1,38 +1,44 @@
 "use client"
 import Image from "next/image"
 import { UserCircleIcon } from '@heroicons/react/24/solid'
-import { useEffect, useState } from "react"
-import { signIn, useSession } from "next-auth/react"
+import { useState } from "react"
 import { toast } from "react-toastify"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
+import axios from "axios"
 
 export default function Page() {
     const router = useRouter()
-    const session = useSession()
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
+    const [error, setError] = useState('')
     const [passwordShown, setPasswordShown] = useState(false)
     const togglePasswordVisibility = () => setPasswordShown((cur) => !cur)
 
-    useEffect(() => {
-      if(session?.status === "authenticated") {
-        router.push("/newsfeed")
-      }
-    }, [session?.status])
-
     const handleLogin = async (e) => {
       e.preventDefault();
-      let data = { username, password };
-      signIn("credentials", { ...data, redirect: false }).then((callback) => {
-        if (callback?.error) {
-          toast.error(callback.error)
-        }
 
-        if (callback?.ok && !callback?.error) {
-          toast.success("Login successful!")
-        }
+      try {
+        const response = await axios.post('http://localhost:8080/api/auth/login', {
+          username,
+          password,
+        });
+        if (response.status === 200) {
+          const data = response.data;
 
-      })
+          localStorage.setItem('token', data.token);
+          localStorage.setItem("username", data.userName)
+
+          toast.success("login successful!");
+
+          router.push('/newsfeed');
+        }
+      } catch (error) {
+        if(error.response && error.response.status === 401) {
+        toast.error("Failed!Invalid credentials")
+        } else {
+          toast.error("an error occured, please try again")
+        }
+      }
     }
 
     return(
@@ -55,7 +61,7 @@ export default function Page() {
     </h2>
       <div className='flex justify-center items-center'>
       <div className="w-full max-w-xs">
-      <form className="mx-auto max-w-md text-left">
+      <form onSubmit={handleLogin} className="mx-auto max-w-md text-left">
           <div className="mb-6">
             <label htmlFor="email" className="block font-medium text-gray-900 mb-2">
               Your Username
@@ -90,7 +96,7 @@ export default function Page() {
               {passwordShown ? "🙈" : "👁️"}
             </button>
           </div>
-          <button onClick={handleLogin} className="bg-cyan-900 hover:bg-gray-800 text-white w-full py-3 rounded-lg mt-6">
+          <button type="submit" className="bg-cyan-900 hover:bg-gray-800 text-white w-full py-3 rounded-lg mt-6">
             Sign In
           </button>
           <div className="flex justify-end mt-4">
