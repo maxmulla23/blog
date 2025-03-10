@@ -2,10 +2,37 @@
 import Image from "next/image"
 import { UserCircleIcon } from '@heroicons/react/24/solid'
 import { useState } from "react"
+import { useRouter } from "next/router"
+import axios from "axios"
+import { toast } from "react-toastify"
 
 export default function Page() {
+   const [username, setUsername] = useState()
+   const [password, setPassword] = useState()
     const [passwordShown, setPasswordShown] = useState(false)
     const togglePasswordVisibility = () => setPasswordShown((cur) => !cur)
+    const router = useRouter();
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post("", {
+        username,
+        password,
+      });
+      if(response.status === 200) {
+        toast.success("User registered successfully!")
+
+        setTimeout(() => {
+          router.push('/login');
+        }, 2000)
+      }
+    } catch (error) {
+      toast.error("an error occured!")
+    }
+  }
+
     return(
         <div className="min-h-screen flex ">
             <div className="w-1/2 relative">
@@ -26,7 +53,7 @@ export default function Page() {
             </h2>
               <div className='flex justify-center items-center'>
               <div className="w-full max-w-xs">
-              <form className="mx-auto max-w-md text-left">
+              <form onSubmit={handleSignup} className="mx-auto max-w-md text-left">
                   <div className="mb-6">
                     <label htmlFor="email" className="block font-medium text-gray-900 mb-2">
                       Your Username
@@ -34,6 +61,8 @@ export default function Page() {
                     <input
                       id="username"
                       type="text"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
                       name="username"
                       placeholder="jsmith"
                       className="w-full p-3 border border-gray-300 rounded-lg focus:border-cyan-500"
@@ -46,6 +75,8 @@ export default function Page() {
                     <input
                       id="password"
                       type={passwordShown ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       placeholder="********"
                       className="w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500"
                     />
@@ -57,7 +88,7 @@ export default function Page() {
                       {passwordShown ? "🙈" : "👁️"}
                     </button>
                   </div>
-                  <button className="bg-cyan-900 hover:bg-gray-800 text-white w-full py-3 rounded-lg mt-6">
+                  <button type="submit" className="bg-cyan-900 hover:bg-gray-800 text-white w-full py-3 rounded-lg mt-6">
                     Sign In
                   </button>
                   <div className="flex justify-end mt-4">
