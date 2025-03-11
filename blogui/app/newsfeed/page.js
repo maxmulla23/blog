@@ -1,5 +1,8 @@
-import { Textarea } from "@/components/ui/textarea"
+
 import { SearchBar } from "../comp/searchBar"
+import { BlogCard } from "../comp/blogCard"
+
+
 
 export default function Page() {
     return (
@@ -8,7 +11,7 @@ export default function Page() {
             <div className="flex flex-col mt-8">
                <SearchBar />
             </div>
-            
+            <BlogCard />
             </div>
            
         </div>
