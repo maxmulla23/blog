@@ -36,11 +36,11 @@ const blogs = [
 
 export function BlogCard() {
     return(
-        <div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">
         {blogs.map((blog) => (
-            <Card key={blog.id}>
+            <Card key={blog.id} className="shadow-lg transition-transform hover:scale-105">
             <CardHeader>
-                <CardTitle>{blog.title}</CardTitle>
+                <CardTitle className="text-lg font-semibold">{blog.title}</CardTitle>
             </CardHeader>
             <hr />
             <CardContent>
@@ -48,7 +48,7 @@ export function BlogCard() {
             </CardContent>
             <hr />
             <CardFooter>
-                <p>CardFooter</p>
+                <p className="text-gray-500">CardFooter</p>
             </CardFooter>
         </Card>
         ))

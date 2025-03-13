@@ -2,7 +2,7 @@
 import Image from "next/image"
 import { UserCircleIcon } from '@heroicons/react/24/solid'
 import { useState } from "react"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import axios from "axios"
 import { toast } from "react-toastify"
 
