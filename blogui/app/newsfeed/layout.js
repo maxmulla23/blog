@@ -7,13 +7,13 @@ export default function Layout({ children }) {
               <h2 className="font-bold text-gray-900 uppercase text-2xl">EchoBlog</h2>
                 <div className="flex items-center">
                      <nav className="items-center hidden text-lg text-gray-800 uppercase font-sen dark:text-white lg:flex">
-                    <a href="#" className="flex px-6 py-2 text-cyan-500 border-b-2 border-cyan-500">
+                    <a href="/newsfeed" className="flex px-6 py-2 text-cyan-500 border-b-2 border-cyan-500">
                         Home
                     </a>
                     <a href="#" className="flex px-6 py-2 hover:text-cyan-500">
                         Genres
                     </a>
-                    <a href="#" className="flex px-6 py-2 hover:text-cyan-500">
+                    <a href="/newsfeed/profile" className="flex px-6 py-2 hover:text-cyan-500">
                         Profile
                     </a>
                 </nav>
