@@ -18,12 +18,13 @@ export default function Page() {
       e.preventDefault();
 
       try {
-        const response = await axios.post('http://localhost:8080/api/auth/login', {
+        const response = await axios.post("http://localhost:8080/api/auth/login", {
           username,
           password,
         });
         if (response.status === 200) {
           const data = response.data;
+          console.log(data);
 
           localStorage.setItem('token', data.token);
           localStorage.setItem("username", data.userName)
