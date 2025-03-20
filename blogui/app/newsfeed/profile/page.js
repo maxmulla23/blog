@@ -1,4 +1,6 @@
 import { BlogCard } from "@/app/comp/blogCard";
+import { NewBlog } from "@/app/comp/newblog";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { UserCircleIcon } from '@heroicons/react/24/solid'
 
@@ -18,6 +20,9 @@ export default function Page() {
                 <div className="flex flex-col ml-2">
                 <h1 className="uppercase text-4xl">{User.name}</h1>
                 <h2 className="text-lg">{User.email}</h2>
+                </div>
+                <div className="flex items-end justify-end">
+                    <NewBlog />
                 </div>
                 <hr className="mt-6 border-gray-800 " />
                 <div className="flex items-center justify-center mt-5">
