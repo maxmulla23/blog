@@ -8,7 +8,7 @@ export default function Layout({ children }) {
 
     const navLinks = [
         { name: "Home", href: "/newsfeed" },
-        { name: "Genres", href: "#" },
+        { name: "Genres", href: "/newsfeed/genre" },
         { name: "Profile", href: "/newsfeed/profile" },
     ];
 
