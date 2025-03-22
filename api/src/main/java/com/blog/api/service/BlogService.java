@@ -7,16 +7,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-public class BlogService {
-
-    @Autowired
-    private BlogRepository blogRepository;
-
-    public Blog addBlog(Blog blog, MultipartFile imageFile) throws IOException {
-        blog.setImageName(imageFile.getOriginalFilename());
-        blog.setType(imageFile.getContentType());
-        blog.setImage(imageFile.getBytes());
-
-        return blogRepository.save(blog);
-    }
+public interface BlogService {
 }
