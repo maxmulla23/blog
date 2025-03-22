@@ -28,7 +28,7 @@ public class Genre {
     @Column(updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Blog> blogs = new ArrayList<Blog>();
+//    @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Blog> blogs = new ArrayList<Blog>();
 
 }
