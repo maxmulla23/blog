@@ -14,7 +14,7 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
     Page<Blog> findByUserOrderByCreatedDateDesc(UserEntity user, Pageable pageable);
     Page<Blog> findAllByOrderByCreatedDateDesc(Pageable pageable);
 
-    Optional<Blog> findById(Long id);
+    Optional<Blog> findById(int id);
 
-    void delete(Blog blog);
+    void deletebyid(int id);
 }

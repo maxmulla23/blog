@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -27,8 +28,12 @@ public class BlogService {
         Blog blog = Blog.builder()
                 .title(blogDto.getTitle())
                 .body(blogDto.getBody())
+                .createdAt(blogDto.getCreatedAt())
                 .user(user)
                 .build();
         return blogRepository.save(blog);
+    }
+    public void deleteBlog(int id) {
+        blogRepository.deleteById(id);
     }
 }
