@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.sql.Types;
 import java.time.LocalDateTime;
@@ -27,10 +30,18 @@ public class Blog {
     private String title;
     private String body;
 
+    @CreatedBy
+    @Column(name = "created_by", length = 50, updatable = false)
+    private String createdBy;
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "genre_id")
 //    private Genre genre;
+    @CreatedDate
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @LastModifiedDate
+    @Column(name = "last_modified_date")
+    private LocalDateTime lastModifiedDate = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
