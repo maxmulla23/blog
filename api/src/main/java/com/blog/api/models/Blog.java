@@ -29,10 +29,6 @@ public class Blog {
     private int id;
     private String title;
     private String body;
-
-    @CreatedBy
-    @Column(name = "created_by", length = 50, updatable = false)
-    private String createdBy;
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "genre_id")
 //    private Genre genre;
