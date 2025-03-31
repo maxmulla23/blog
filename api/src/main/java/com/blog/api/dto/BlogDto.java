@@ -9,8 +9,6 @@ public class BlogDto {
     private int id;
     private String title;
     private String body;
-    private LocalDateTime createdAt;
-    private LocalDateTime lastModifiedDate;
 
     public BlogDto() {
     }
@@ -19,7 +17,5 @@ public class BlogDto {
         this.id = id;
         this.title = title;
         this.body = body;
-        this.createdAt = createdAt;
-        this.lastModifiedDate = lastModifiedDate;
     }
 }
