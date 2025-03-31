@@ -7,14 +7,11 @@ import com.blog.api.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.List;
-import java.util.UUID;
 
 @Service
-@Transactional
 public class BlogService {
 
     @Autowired
@@ -28,7 +25,7 @@ public class BlogService {
         Blog blog = Blog.builder()
                 .title(blogDto.getTitle())
                 .body(blogDto.getBody())
-                .createdAt(blogDto.getCreatedAt())
+                .createdDate(blogDto.getCreatedDate())
                 .user(user)
                 .build();
         return blogRepository.save(blog);

@@ -13,14 +13,13 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/")
-@CrossOrigin
 public class BlogController {
 
     @Autowired
     private BlogService blogService;
 
-    @PostMapping("blog")
-    public ResponseEntity<Blog> createBlog(@RequestPart BlogDto blogDto, Principal principal) {
+    @PostMapping("blog/create")
+    public ResponseEntity<Blog> createBlog(@RequestParam BlogDto blogDto, Principal principal) {
             Blog blog1 = blogService.createBlog(blogDto, principal);
             return new ResponseEntity<>(blog1, HttpStatus.CREATED);
     }
