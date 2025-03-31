@@ -29,10 +29,10 @@ public class Comment {
     private LocalDateTime lastModifiedDate = LocalDateTime.now();
 
     @ManyToOne
-    @JoinColumn(name = "blog_id", referencedColumnName = "blog_id", nullable = false)
+    @JoinColumn(name = "blog_id", referencedColumnName = "id", nullable = false)
     private Blog blog;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserEntity user;
 }

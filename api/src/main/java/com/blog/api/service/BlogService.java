@@ -7,13 +7,11 @@ import com.blog.api.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.List;
 
 @Service
-@Transactional
 public class BlogService {
 
     @Autowired
@@ -27,8 +25,12 @@ public class BlogService {
         Blog blog = Blog.builder()
                 .title(blogDto.getTitle())
                 .body(blogDto.getBody())
+                .createdDate(blogDto.getCreatedDate())
                 .user(user)
                 .build();
         return blogRepository.save(blog);
+    }
+    public void deleteBlog(int id) {
+        blogRepository.deleteById(id);
     }
 }

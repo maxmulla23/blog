@@ -10,7 +10,6 @@ public class BlogDto {
     private String title;
     private String body;
 
-
     public BlogDto() {
     }
 

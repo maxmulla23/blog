@@ -1,10 +1,8 @@
 package com.blog.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
@@ -24,30 +22,30 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "blog")
 public class Blog {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+
+
     private String title;
     private String body;
-
-    @CreatedBy
-    @Column(name = "created_by", length = 50, updatable = false)
-    private String createdBy;
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "genre_id")
 //    private Genre genre;
     @CreatedDate
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdDate = LocalDateTime.now();
 
     @LastModifiedDate
     @Column(name = "last_modified_date")
     private LocalDateTime lastModifiedDate = LocalDateTime.now();
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserEntity user;
 
-    @OneToMany(mappedBy = "blog", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
