@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(BlogNotFoundException.class)
-    public ResponseEntity<ErrorObject> handleReviewNotFoundException(BlogNotFoundException ex, WebRequest request) {
+    public ResponseEntity<ErrorObject> handleBlogNotFoundException(BlogNotFoundException ex, WebRequest request) {
 
         ErrorObject errorObject = new ErrorObject();
 
