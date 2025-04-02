@@ -6,7 +6,10 @@ import com.blog.api.models.Genre;
 import com.blog.api.models.UserEntity;
 import com.blog.api.repository.BlogRepository;
 import com.blog.api.repository.GenreRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 //import org.springframework.transaction.annotation.Transactional;
@@ -75,8 +78,20 @@ public class BlogService {
         return blogRepository.findById(blogId);
     }
 
+    public Page<Blog> getAllBlogs(Pageable pageable) {
+        return blogRepository.findAll(pageable);
+    }
 
-    public void deleteBlog(int id) {
-        blogRepository.deleteById(id);
+    public Page<Blog> getBlogsByUser(UserEntity user, Pageable pageable) {
+        return blogRepository.findByUser(user, pageable);
+    }
+
+    public Page<Blog> getBlogsByGenre(String genreName, Pageable pageable) {
+        return blogRepository.findByGenres_Name(genreName, pageable);
+    }
+
+    @Transactional
+    public void deleteBlog(int blogId) {
+        blogRepository.deleteById(blogId);
     }
 }
