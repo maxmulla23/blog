@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BlogRepository extends JpaRepository<Blog, Integer> {
-    List<Blog> findByUser(UserEntity user);
+    Page<Blog> findByUser(UserEntity user, Pageable pageable);
     Page<Blog> findByGenres_Name(String genreName, Pageable pageable);
     Optional<Blog> findById(int id);
 

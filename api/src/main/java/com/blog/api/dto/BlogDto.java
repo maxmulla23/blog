@@ -3,12 +3,14 @@ package com.blog.api.dto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class BlogDto {
     private int id;
     private String title;
     private String body;
+    private List<String> genres;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
