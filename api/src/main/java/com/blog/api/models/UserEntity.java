@@ -30,6 +30,8 @@ public class UserEntity {
     private List<Role> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @ToString.Exclude
     private List<Blog> blogs;
+
+
+
 }
