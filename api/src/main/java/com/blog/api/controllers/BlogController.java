@@ -87,7 +87,7 @@ public class BlogController {
         return ResponseEntity.ok(blogs);
     }
 
-    @GetMapping("user/{username}")
+    @GetMapping("blogs/user/{username}")
     public ResponseEntity<Page<Blog>> getBlogsByUser(@PathVariable String username, @PageableDefault(size = 10, sort = "createdAt" , direction = Sort.Direction.DESC) Pageable pageable) {
         Optional<UserEntity> user = userService.getUserByUsername(username);
         if (user.isEmpty()) {
