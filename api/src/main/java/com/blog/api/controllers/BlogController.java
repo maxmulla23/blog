@@ -9,6 +9,10 @@ import com.blog.api.service.BlogService;
 import com.blog.api.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -44,10 +48,8 @@ public class BlogController {
         return new ResponseEntity<>(createdBlog, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Blog> updateExistingBlog(
-            @PathVariable int id,
-            @RequestBody BlogDto updateBlogRequest) {
+    @PutMapping("{id}")
+    public ResponseEntity<Blog> updateExistingBlog( @PathVariable int id, @RequestBody BlogDto updateBlogRequest) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
         Optional<UserEntity> currentUserOptional = userService.getUserByUsername(currentUsername);
@@ -78,10 +80,21 @@ public class BlogController {
         }
         return ResponseEntity.ok(result);
     }
+    @GetMapping("blogs")
+    public ResponseEntity<Page<Blog>> getBlogs(@PageableDefault(size = 10, sort = "createdAt" , direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<Blog> blogs = blogService.getAllBlogs(pageable);
 
-//    @PostMapping
-//    public ResponseEntity<Address> createAddress(@RequestBody AddressRequest addressRequest, Principal principal){
-//        Address address = addressService.createAddress(addressRequest,principal);
-//        return new ResponseEntity<>(address, HttpStatus.OK);
-//    }
+        return ResponseEntity.ok(blogs);
+    }
+
+    @GetMapping("blogs/user/{username}")
+    public ResponseEntity<Page<Blog>> getBlogsByUser(@PathVariable String username, @PageableDefault(size = 10, sort = "createdAt" , direction = Sort.Direction.DESC) Pageable pageable) {
+        Optional<UserEntity> user = userService.getUserByUsername(username);
+        if (user.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Page<Blog> blogs = blogService.getBlogsByUser(user.get(), pageable);
+        return ResponseEntity.ok(blogs);
+    }
+
 }

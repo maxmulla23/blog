@@ -11,7 +11,6 @@ public class BlogDto {
     private String title;
     private String body;
     private List<String> genres;
-    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     public BlogDto() {
@@ -21,7 +20,6 @@ public class BlogDto {
         this.id = id;
         this.title = title;
         this.body = body;
-        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 }
