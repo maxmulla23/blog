@@ -2,12 +2,14 @@ package com.blog.api.service.implementation;
 
 import com.blog.api.dto.CommentDTO;
 import com.blog.api.dto.CreateCommentDTO;
+import com.blog.api.exceptions.BlogNotFoundException;
 import com.blog.api.models.Blog;
 import com.blog.api.models.Comment;
 import com.blog.api.models.UserEntity;
 import com.blog.api.repository.BlogRepository;
 import com.blog.api.repository.CommentRepository;
 import com.blog.api.service.CommentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.time.LocalDateTime;
@@ -18,6 +20,7 @@ public class CommentServiceImpl implements CommentService {
     private UserDetailsService userDetailsService;
     private BlogRepository blogRepository;
 
+    @Autowired
     public CommentServiceImpl(UserDetailsService userDetailsService, BlogRepository blogRepository, CommentRepository commentRepository) {
         this.userDetailsService = userDetailsService;
         this.blogRepository = blogRepository;
@@ -26,11 +29,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment createComment(int blogId, UserEntity user, Comment comment) {
+
+        Blog blog = blogRepository.findById(blogId).orElseThrow(() -> new BlogNotFoundException("blog not found"));
+
         comment.setUser(user);
         comment.setCreatedAt(LocalDateTime.now());
-
-        Blog blog = blogRepository.findById(blogId).orElseThrow();
-
         comment.setBlog(blog);
 
         return commentRepository.save(comment);
