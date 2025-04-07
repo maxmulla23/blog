@@ -10,24 +10,26 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class CommentController {
-    @Autowired
     private UserService userService;
-    @Autowired
     private CommentService commentService;
-    @Autowired
     private BlogService blogService;
+
+    @Autowired
+    public CommentController(UserService userService, CommentService commentService, BlogService blogService) {
+        this.userService = userService;
+        this.commentService = commentService;
+        this.blogService = blogService;
+    }
 
     @PostMapping("/comment")
     public ResponseEntity<Comment> createComment(@RequestBody CreateCommentDTO createCommentDTO, Principal principal) {
@@ -42,5 +44,11 @@ public class CommentController {
         Comment newComment = commentService.createComment(createCommentDTO.getBlogId(), user.get(), comment);
 
         return new ResponseEntity<>(newComment, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/comment/blog/{blogId}")
+    public ResponseEntity<List<Comment>> getCommentsByBlogId(@PathVariable int blogId) {
+        List<Comment> comments = commentService.getCommentByBlogId(blogId);
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 }
