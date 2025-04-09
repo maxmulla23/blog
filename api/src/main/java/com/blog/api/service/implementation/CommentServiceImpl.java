@@ -11,10 +11,12 @@ import com.blog.api.repository.CommentRepository;
 import com.blog.api.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Service
 public class CommentServiceImpl implements CommentService {
     private CommentRepository commentRepository;
     private UserDetailsService userDetailsService;
@@ -40,8 +42,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentDTO> getCommentByBlogId(int id) {
-        return List.of();
+    public List<Comment> getCommentByBlogId(int blogId) {
+        return commentRepository.findByBlogId(blogId);
     }
 
     @Override
