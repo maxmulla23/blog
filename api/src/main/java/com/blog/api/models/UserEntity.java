@@ -32,8 +32,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Blog> blogs;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userInfo_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "user")
     private UserInfo userInfo;
 
 }

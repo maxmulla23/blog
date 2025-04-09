@@ -20,6 +20,7 @@ public class UserInfo {
     private String bio;
 
 
-    @OneToOne(mappedBy = "userinfo")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private  UserEntity user;
 }
