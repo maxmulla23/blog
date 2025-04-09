@@ -1,5 +1,6 @@
 package com.blog.api.controllers;
 
+import com.blog.api.dto.UserInfoDto;
 import com.blog.api.models.UserEntity;
 import com.blog.api.models.UserInfo;
 import com.blog.api.service.UserInfoService;
@@ -17,12 +18,22 @@ public class UserInfoController {
 
     @Autowired
     private UserInfoService userInfoService;
+    @Autowired
     private UserService userService;
 
     @PostMapping("/userinfo/{username}")
-    public ResponseEntity<UserInfo> createInfo(@PathVariable String username, @RequestBody UserInfo userInfo, Principal principal) {
-//        username = principal.getName(); // Get logged-in user's username
-//        Optional<UserEntity> user = userService.getUserByUsername(username);
+    public ResponseEntity<UserInfo> createInfo(@PathVariable String username, @RequestBody UserInfo userInfo) {
         return ResponseEntity.ok(userInfoService.createInfo(userInfo, username));
+    }
+
+    @GetMapping("/userinfo/get/{username}")
+    public ResponseEntity<UserInfoDto> getInfoByUser(@PathVariable String username) {
+        UserEntity user = userService.getUserByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found with username: " + username));
+
+        // Call the service method with the correct user entity
+        UserInfoDto userInfoDto = userInfoService.getInfoByUser(user);
+
+        return ResponseEntity.ok(userInfoDto);
     }
 }
