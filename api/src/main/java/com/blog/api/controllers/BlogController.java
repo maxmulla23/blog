@@ -14,13 +14,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -34,18 +37,19 @@ public class BlogController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("blog/create")
-    public ResponseEntity<Blog> createNewBlog(@RequestBody CreateBlogRequest createBlogRequest, Principal principal) {
+    @PostMapping(value = "blog/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Blog> createNewBlog(@ModelAttribute CreateBlogRequest createBlogRequest, Principal principal) {
         String username = principal.getName(); // Get logged-in user's username
         Optional<UserEntity> author = userService.getUserByUsername(username);
         if (author.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        Blog blog = new Blog();
-        blog.setTitle(createBlogRequest.getTitle());
-        blog.setBody(createBlogRequest.getBody());
-        Blog createdBlog = blogService.createBlog(blog, author.get(), createBlogRequest.getGenres());
-        return new ResponseEntity<>(createdBlog, HttpStatus.CREATED);
+        try {
+            Blog newBlog = blogService.createBlog(createBlogRequest, author.get(), createBlogRequest.getGenres());
+            return new ResponseEntity<>(newBlog, HttpStatus.CREATED);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not save image", e);
+        }
     }
 
     @PutMapping("{id}")
