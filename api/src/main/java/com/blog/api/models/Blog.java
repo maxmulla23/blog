@@ -1,15 +1,14 @@
 package com.blog.api.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.type.SqlTypes;
+
 
 import java.sql.Types;
 import java.time.LocalDateTime;
@@ -42,6 +41,7 @@ public class Blog {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    private String image;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
