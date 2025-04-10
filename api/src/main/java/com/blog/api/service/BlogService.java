@@ -1,6 +1,7 @@
 package com.blog.api.service;
 
 import com.blog.api.dto.BlogDto;
+import com.blog.api.dto.CreateBlogRequest;
 import com.blog.api.models.Blog;
 import com.blog.api.models.Genre;
 import com.blog.api.models.UserEntity;
@@ -8,12 +9,18 @@ import com.blog.api.repository.BlogRepository;
 import com.blog.api.repository.GenreRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 //import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -27,9 +34,15 @@ public class BlogService {
     @Autowired
     private GenreRepository genreRepository;
 
+    @Value("${static.images}")
+    private String uploadPath;
+
     private UserDetailsService userDetailsService;
 
-    public Blog createBlog(Blog blog, UserEntity author, List<String> genreNames) {
+    public Blog createBlog(CreateBlogRequest createBlogRequest, UserEntity author, List<String> genreNames) throws IOException {
+        Blog blog = new Blog();
+        blog.setTitle(createBlogRequest.getTitle());
+        blog.setBody(createBlogRequest.getBody());
         blog.setUser(author);
         blog.setCreatedAt(LocalDateTime.now());
 
@@ -44,6 +57,18 @@ public class BlogService {
             genres.add(genre);
         }
         blog.setGenres((List<Genre>) genres);
+
+        if (createBlogRequest.getImage() != null && !createBlogRequest.getImage().isEmpty()) {
+            Path uploadDir = Paths.get(uploadPath);
+            if (!Files.exists(uploadDir)) {
+                Files.createDirectories(uploadDir);
+            }
+
+            String filename = UUID.randomUUID().toString() + "_" + createBlogRequest.getImage().getOriginalFilename();
+            Path filePath = Paths.get(uploadPath, filename);
+            Files.copy(createBlogRequest.getImage().getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+            blog.setImage("/uploads/" + filename); // Save the image path
+        }
 
         return blogRepository.save(blog);
     }
