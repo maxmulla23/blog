@@ -14,17 +14,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
+
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class BlogService {
@@ -56,7 +54,7 @@ public class BlogService {
             });
             genres.add(genre);
         }
-        blog.setGenres((List<Genre>) genres);
+        blog.setGenres(genres);
 
         if (createBlogRequest.getImage() != null && !createBlogRequest.getImage().isEmpty()) {
             Path uploadDir = Paths.get(uploadPath);
