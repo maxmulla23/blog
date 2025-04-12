@@ -4,13 +4,8 @@ package com.blog.api.models;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.type.SqlTypes;
 
-
-import java.sql.Types;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +26,6 @@ public class Blog {
 
     private String title;
     private String body;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "genre_id")
-//    private Genre genre;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
