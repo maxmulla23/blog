@@ -26,8 +26,8 @@ export default function Page() {
           const data = response.data;
           console.log(data);
 
-          localStorage.setItem('token', data.token);
-          localStorage.setItem("username", data.userName)
+          localStorage.setItem('token', data.accessToken);
+          localStorage.setItem("username", data.username)
 
           toast.success("login successful!");
 
